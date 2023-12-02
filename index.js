@@ -10,7 +10,7 @@ function getEthBalance() {
             var balanceDisplay = document.getElementById("balance-display");
             balanceDisplay.textContent = balanceInEth + " ETH";
         } else {
-            console.error("Помилка отримання балансу:", error);
+            console.error("Ballance error:", error);
         }
     });
 }
@@ -49,15 +49,12 @@ function updateSelectedCryptoFromList(crypto) {
     updateSelectedCrypto();
 }
 
-
 window.onload = function () {
     var currentAddressElement = document.getElementById("current-address");
 currentAddressElement.textContent = sepoliaContractAddress;
 
-    // Перевірка чи є Metamask у браузері
     if (typeof ethereum !== 'undefined') {
         ethereum.request({ method: 'eth_requestAccounts' }).then(function (accounts) {
-            // Використовуємо перший акаунт з Metamask як адресу за замовчуванням
             var defaultAddress = accounts.length > 0 ? accounts[0] : "0xE862Ca4b9389d9bC306c2367A36B8Bd45f6838Bb";
             currentAddressElement.textContent = defaultAddress;
 
@@ -67,10 +64,9 @@ currentAddressElement.textContent = sepoliaContractAddress;
             updateSelectedCryptoFromList(defaultCrypto);
             getEthBalance(defaultAddress);
         }).catch(function (error) {
-            console.error("Помилка отримання адреси гаманця:", error);
+            console.error("Wallet error:", error);
         });
     } else {
-        // Якщо Metamask відсутній, використовуємо адресу за замовчуванням
         currentAddressElement.textContent = "0xE862Ca4b9389d9bC306c2367A36B8Bd45f6838Bb";
         var sepoliaContractElement = document.getElementById("sepolia-contract");
         sepoliaContractElement.textContent = sepoliaContractAddress;
